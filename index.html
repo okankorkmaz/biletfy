@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>biletfy - Türkiye'nin Etkinlik ve Bilet Platformu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col font-sans">
+  <header class="border-b border-gray-800 p-4 bg-gray-950">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold tracking-wider text-indigo-500">biletfy</h1>
+      <span class="text-xs bg-indigo-950 text-indigo-300 px-3 py-1 rounded-full border border-indigo-800">Canlı Yayında</span>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-5xl w-full mx-auto p-4 flex flex-col justify-center items-center text-center">
+    <div class="space-y-4 max-w-lg">
+      <h2 class="text-4xl font-extrabold text-gray-100">Etkinlik Dünyasını Keşfet</h2>
+      <p class="text-gray-400">Türkiye'deki tüm konser, tiyatro ve etkinlik akışları biletfy üzerinde toplanıyor.</p>
+      
+      <div id="status-card" class="p-4 bg-gray-800 rounded-lg border border-gray-700 text-sm text-gray-300 mt-6">
+        Veritabanı bağlantısı kontrol ediliyor...
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-gray-800 p-4 text-center text-xs text-gray-500">
+    &copy; 2026 biletfy. Tüm hakları saklıdır.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
