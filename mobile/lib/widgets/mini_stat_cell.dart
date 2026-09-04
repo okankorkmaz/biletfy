@@ -45,12 +45,16 @@ class MiniStatCell extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpace.xs),
               ],
+              // "Günlük Ort." dar hücreye sığmıyor; kırpmak yerine ölçekle.
               Flexible(
-                child: Text(
-                  label,
-                  style: AppTypography.micro,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    label,
+                    style: AppTypography.micro,
+                    maxLines: 1,
+                  ),
                 ),
               ),
             ],

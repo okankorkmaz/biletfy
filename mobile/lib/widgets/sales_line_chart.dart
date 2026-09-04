@@ -109,14 +109,19 @@ class SalesLineChart extends StatelessWidget {
                 showTitles: true,
                 interval: step.toDouble(),
                 reservedSize: 42,
-                getTitlesWidget: (value, _) => Padding(
-                  padding: const EdgeInsets.only(right: AppSpace.chipGap),
-                  child: Text(
-                    Tr.number(value),
-                    style: AppTypography.micro,
-                    textAlign: TextAlign.right,
-                  ),
-                ),
+                getTitlesWidget: (value, _) {
+                  // Tepedeki paylı maxY için etiket basma — grid çizgisi
+                  // olmayan bir sayı eksende asılı kalır.
+                  if (value % step != 0) return const SizedBox.shrink();
+                  return Padding(
+                    padding: const EdgeInsets.only(right: AppSpace.chipGap),
+                    child: Text(
+                      Tr.number(value),
+                      style: AppTypography.micro,
+                      textAlign: TextAlign.right,
+                    ),
+                  );
+                },
               ),
             ),
             bottomTitles: AxisTitles(

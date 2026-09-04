@@ -34,6 +34,10 @@ abstract interface class DashboardRepository {
   /// Günlük satış serisi. [eventId] verilirse o etkinliğe süzülür.
   Future<List<DailySales>> dailySales(SalesRange range, {String? eventId});
 
+  /// Aralığın bir önceki aynı uzunluktaki döneme göre değişimi
+  /// (`18.6` → `%18,6`). Karşılaştırma penceresi UI'da hesaplanmaz.
+  Future<double> salesTrend(SalesRange range, {String? eventId});
+
   /// Aylık satış trendi kovaları.
   Future<List<SalesBucket>> monthlyBuckets(DateTime month);
 

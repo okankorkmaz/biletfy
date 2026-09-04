@@ -84,7 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ListTile(
                 minTileHeight: AppSize.minTouch,
                 title: Text(
-                  Tr.percent(threshold),
+                  Tr.percentInt(threshold),
                   style: AppTypography.body,
                 ),
                 selected: threshold == _occupancyThreshold,
@@ -153,7 +153,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               SettingsRow(
                 label: 'Eşik',
-                value: Tr.percent(_occupancyThreshold),
+                value: Tr.percentInt(_occupancyThreshold),
                 onTap: _occupancyAlertEnabled ? _pickThreshold : null,
               ),
             ],

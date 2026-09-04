@@ -27,6 +27,9 @@ abstract final class Tr {
   /// `68.4` → `%68,4` — yüzde işareti önde, tek ondalık.
   static String percent(num value) => '%${_oneDecimal.format(value)}';
 
+  /// `75` → `%75` — ondalığı olmayan eşik/ayar değerleri için.
+  static String percentInt(int value) => '%${number(value)}';
+
   /// `18.6` → `%18,6` · `-4.2` → `−%4,2`
   static String signedPercent(num value) {
     if (value < 0) return '−${percent(value.abs())}';

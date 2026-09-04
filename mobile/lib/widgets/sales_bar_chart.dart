@@ -79,14 +79,20 @@ class SalesBarChart extends StatelessWidget {
                     showTitles: true,
                     interval: step.toDouble(),
                     reservedSize: 34,
-                    getTitlesWidget: (value, _) => Padding(
-                      padding: const EdgeInsets.only(right: AppSpace.chipGap),
-                      child: Text(
-                        Tr.axisCompact(value),
-                        style: AppTypography.micro,
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
+                    getTitlesWidget: (value, _) {
+                      // Tepedeki paylı maxY için etiket basma.
+                      if (value % step != 0) return const SizedBox.shrink();
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          right: AppSpace.chipGap,
+                        ),
+                        child: Text(
+                          Tr.axisCompact(value),
+                          style: AppTypography.micro,
+                          textAlign: TextAlign.right,
+                        ),
+                      );
+                    },
                   ),
                 ),
                 bottomTitles: AxisTitles(

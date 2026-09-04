@@ -37,7 +37,6 @@ class StatusChip extends StatelessWidget {
     final isMuted = status == EventStatus.tamamlanan;
     return Container(
       height: AppSize.statusPill,
-      alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSize.statusPillPaddingX,
       ),
@@ -45,9 +44,15 @@ class StatusChip extends StatelessWidget {
         color: isMuted ? AppColors.surfaceAlt : AppColors.tint(status.color),
         borderRadius: AppRadius.pillR,
       ),
-      child: Text(
-        status.label,
-        style: AppTypography.label.copyWith(color: status.color),
+      // Row(min) olmadan Container gevşek kısıtta tüm genişliği kaplar.
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            status.label,
+            style: AppTypography.label.copyWith(color: status.color),
+          ),
+        ],
       ),
     );
   }

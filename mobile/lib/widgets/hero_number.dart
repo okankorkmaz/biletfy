@@ -28,14 +28,16 @@ class HeroNumber extends StatelessWidget {
   final String unit;
 
   /// Önceki döneme göre değişim (`18.6` → `%18,6`).
-  final double trendPct;
+  /// Henüz yüklenmediyse `null` — rozet çizilmez.
+  final double? trendPct;
 
   /// Rozetin altındaki açıklama (ör. `(Önceki 7 güne göre)`).
   final String trendNote;
 
   @override
   Widget build(BuildContext context) {
-    final isUp = trendPct >= 0;
+    final trend = trendPct;
+    final isUp = (trend ?? 0) >= 0;
     final trendColor = isUp ? AppColors.success : AppColors.danger;
 
     return Row(
@@ -71,30 +73,34 @@ class HeroNumber extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(width: AppSpace.cardGap),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  isUp ? AppIcons.trendUp : AppIcons.trendDown,
-                  size: AppIconSize.chevron,
-                  color: trendColor,
-                ),
-                const SizedBox(width: AppSpace.xs),
-                Text(
-                  Tr.signedPercent(trendPct),
-                  style: AppTypography.labelStrong.copyWith(color: trendColor),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpace.xxs),
-            Text(trendNote, style: AppTypography.micro),
-          ],
-        ),
+        if (trend != null) ...[
+          const SizedBox(width: AppSpace.cardGap),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    isUp ? AppIcons.trendUp : AppIcons.trendDown,
+                    size: AppIconSize.chevron,
+                    color: trendColor,
+                  ),
+                  const SizedBox(width: AppSpace.xs),
+                  Text(
+                    Tr.signedPercent(trend),
+                    style: AppTypography.labelStrong.copyWith(
+                      color: trendColor,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpace.xxs),
+              Text(trendNote, style: AppTypography.micro),
+            ],
+          ),
+        ],
       ],
     );
   }

@@ -25,6 +25,7 @@ class _DailySalesViewState extends State<DailySalesView> {
 
   SalesRange _range = SalesRange.gun7;
   Future<List<DailySales>>? _series;
+  Future<double>? _trend;
 
   @override
   void didChangeDependencies() {
@@ -36,6 +37,7 @@ class _DailySalesViewState extends State<DailySalesView> {
   void _load() {
     setState(() {
       _series = _repository.dailySales(_range, eventId: widget.eventId);
+      _trend = _repository.salesTrend(_range, eventId: widget.eventId);
     });
   }
 
@@ -65,6 +67,7 @@ class _DailySalesViewState extends State<DailySalesView> {
               builder: (context, series) => _DailySalesBody(
                 series: series,
                 range: _range,
+                trend: _trend,
               ),
             ),
           ),
@@ -75,24 +78,21 @@ class _DailySalesViewState extends State<DailySalesView> {
 }
 
 class _DailySalesBody extends StatelessWidget {
-  const _DailySalesBody({required this.series, required this.range});
+  const _DailySalesBody({
+    required this.series,
+    required this.range,
+    required this.trend,
+  });
 
   final List<DailySales> series;
   final SalesRange range;
 
+  /// Önceki döneme göre değişim — repository'den gelir.
+  final Future<double>? trend;
+
   @override
   Widget build(BuildContext context) {
     final total = series.fold(0, (sum, point) => sum + point.sold);
-
-    // Trend: aralığın ikinci yarısı ile ilk yarısını karşılaştırır.
-    final half = series.length ~/ 2;
-    final recent = series
-        .skip(series.length - half)
-        .fold(0, (sum, point) => sum + point.sold);
-    final previous = series.take(half).fold(0, (sum, point) => sum + point.sold);
-    final trend = previous == 0
-        ? 0.0
-        : (recent - previous) / previous * 100;
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(
@@ -102,12 +102,15 @@ class _DailySalesBody extends StatelessWidget {
         AppSpace.sectionGap,
       ),
       children: [
-        HeroNumber(
-          label: range.heroLabel,
-          value: total,
-          unit: 'bilet',
-          trendPct: trend,
-          trendNote: range.comparisonNote,
+        FutureBuilder<double>(
+          future: trend,
+          builder: (context, snapshot) => HeroNumber(
+            label: range.heroLabel,
+            value: total,
+            unit: 'bilet',
+            trendPct: snapshot.data,
+            trendNote: range.comparisonNote,
+          ),
         ),
         const SizedBox(height: AppSpace.cardPadding),
         SectionCard(

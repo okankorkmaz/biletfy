@@ -128,6 +128,14 @@ class MockDashboardRepository implements DashboardRepository {
     return _respond(_scaled(generated, eventId));
   }
 
+  @override
+  Future<double> salesTrend(SalesRange range, {String? eventId}) {
+    // 7 gün için şartnamedeki değer; diğer aralıklar sabit tohumla türetilir.
+    if (range == SalesRange.gun7) return _respond(18.6);
+    final random = math.Random(range.days);
+    return _respond((random.nextDouble() * 40 - 10).roundToDouble() + 0.4);
+  }
+
   /// Etkinlik bazlı görünümde seri, o etkinliğin toplam payına göre ölçeklenir.
   List<DailySales> _scaled(List<DailySales> series, String? eventId) {
     if (eventId == null) return series;
