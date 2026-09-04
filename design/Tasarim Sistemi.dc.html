@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#000; color:#fff; font-family:Inter, sans-serif; font-variant-numeric: tabular-nums; }
+  a { color:#E5233D; text-decoration:none; }
+  a:hover { color:#ff5c72; }
+</style>
+</helmet>
+
+<div style="background:#000; min-height:100vh; padding:56px 48px 96px; display:flex; flex-direction:column; align-items:center; gap:56px">
+
+  <div style="width:100%; max-width:1080px; display:flex; flex-direction:column; gap:12px">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#E5233D">BKM Mutfak · Etkinlik &amp; Bilet Satış Takip</div>
+    <div style="font-size:40px; line-height:46px; font-weight:700; letter-spacing:-0.02em">Tasarım Sistemi</div>
+    <div style="font-size:15px; line-height:22px; color:#A1A1AA; max-width:640px">Yalnızca koyu tema. Flutter / Material 3 özel dark ThemeData'ya eşlenmek üzere isimlendirilmiş token'lar. Ölçüler dp/pt (@1x), 8 pt grid, tasarım çerçevesi 390×844.</div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px">
+      <div style="background:#202024; border-radius:999px; padding:6px 14px; font-size:13px; font-weight:500; color:#A1A1AA">Inter · tabular figures</div>
+      <div style="background:#202024; border-radius:999px; padding:6px 14px; font-size:13px; font-weight:500; color:#A1A1AA">Lucide 24/20/16</div>
+      <div style="background:#202024; border-radius:999px; padding:6px 14px; font-size:13px; font-weight:500; color:#A1A1AA">fl_chart</div>
+      <div style="background:#202024; border-radius:999px; padding:6px 14px; font-size:13px; font-weight:500; color:#A1A1AA">Gölge yok · flat</div>
+      <div style="background:#202024; border-radius:999px; padding:6px 14px; font-size:13px; font-weight:500; color:#A1A1AA">tr_TR</div>
+    </div>
+  </div>
+
+  <!-- 1. RENK -->
+  <div style="width:100%; max-width:1080px; display:flex; flex-direction:column; gap:20px">
+    <div style="display:flex; align-items:baseline; gap:12px; border-bottom:1px solid #2A2A2E; padding-bottom:12px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">01</div>
+      <div style="font-size:22px; line-height:28px; font-weight:700">Renk</div>
+    </div>
+
+    <div style="font-size:13px; font-weight:500; color:#6B6B72; letter-spacing:0.08em; text-transform:uppercase">Yüzey ve metin</div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px">
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#000000; border:1px solid #2A2A2E; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">bg</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#000000</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Ekran arka planı (OLED siyah)</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#151517; border:1px solid #2A2A2E; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">surface</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#151517</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Kartlar</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#202024; border:1px solid #2A2A2E; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">surfaceAlt</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#202024</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Kart içi hücre, pasif chip, saat kutusu, dropdown</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#2A2A2E; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">border</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#2A2A2E</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">1 pt kart kenarlığı, divider, grafik grid, progress track</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#FFFFFF; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">textPrimary</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#FFFFFF</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Değerler, başlıklar</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#A1A1AA; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">textSecondary</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#A1A1AA</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Etiketler, ikincil metin, pasif nav</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#6B6B72; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">textTertiary</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#6B6B72</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Komşu ay günleri, en düşük öncelikli metin</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:13px; font-weight:500; color:#6B6B72; letter-spacing:0.08em; text-transform:uppercase; margin-top:8px">Marka ve semantik</div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px">
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#E5233D; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">primary</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#E5233D</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">BKM kırmızısı — yalnızca aktif/seçili anlamı</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#22C55E; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">success</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#22C55E</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Artış, satılan, Devam Eden, günlük satış çizgisi</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#F59E0B; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">warning</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#F59E0B</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Yaklaşan</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#EF4444; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">danger</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#EF4444</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Kalan, azalış</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#3B82F6; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">info</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#3B82F6</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Birincil bar grafik, Toplam Satılan ikonu</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; gap:14px; align-items:center">
+        <div style="width:48px; height:48px; border-radius:10px; background:#8B5CF6; flex:none"></div>
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500">purple</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">#8B5CF6</div>
+          <div style="font-size:12px; line-height:16px; color:#A1A1AA">Ortalama Doluluk, Ortalama Bilet Fiyatı ikonları</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:13px; font-weight:500; color:#6B6B72; letter-spacing:0.08em; text-transform:uppercase; margin-top:8px">Biletleme firmaları — sabit ve global</div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px">
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:12px">
+        <div style="height:8px; border-radius:999px; background:#3B82F6"></div>
+        <div style="font-size:15px; font-weight:600">Biletix</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">vendor.biletix<br>#3B82F6</div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:12px">
+        <div style="height:8px; border-radius:999px; background:#14B8A6"></div>
+        <div style="font-size:15px; font-weight:600">Bubilet</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">vendor.bubilet<br>#14B8A6</div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:12px">
+        <div style="height:8px; border-radius:999px; background:#F97316"></div>
+        <div style="font-size:15px; font-weight:600">Biletinial</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">vendor.biletinial<br>#F97316</div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:12px">
+        <div style="height:8px; border-radius:999px; background:#6B7280"></div>
+        <div style="font-size:15px; font-weight:600">Diğer</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">vendor.diger<br>#6B7280</div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px">
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:14px">
+        <div style="font-size:17px; line-height:22px; font-weight:600">Tint kuralı</div>
+        <div style="font-size:13px; line-height:18px; color:#A1A1AA">İkon konteynerleri ve durum pill arka planları = ilgili renk %15 opak. İkon ve metin = rengin kendisi.</div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+          <div style="width:32px; height:32px; border-radius:10px; background:rgba(229,35,61,0.15); display:flex; align-items:center; justify-content:center; color:#E5233D; font-size:15px; font-weight:600">28</div>
+          <div style="width:32px; height:32px; border-radius:10px; background:rgba(59,130,246,0.15); display:flex; align-items:center; justify-content:center; color:#3B82F6; font-size:15px; font-weight:600">✓</div>
+          <div style="width:32px; height:32px; border-radius:10px; background:rgba(34,197,94,0.15); display:flex; align-items:center; justify-content:center; color:#22C55E; font-size:15px; font-weight:600">₺</div>
+          <div style="width:32px; height:32px; border-radius:10px; background:rgba(139,92,246,0.15); display:flex; align-items:center; justify-content:center; color:#8B5CF6; font-size:15px; font-weight:600">%</div>
+          <div style="height:24px; padding:0 10px; border-radius:999px; background:rgba(34,197,94,0.15); color:#22C55E; font-size:13px; font-weight:500; display:flex; align-items:center">Devam Eden</div>
+          <div style="height:24px; padding:0 10px; border-radius:999px; background:rgba(245,158,11,0.15); color:#F59E0B; font-size:13px; font-weight:500; display:flex; align-items:center">Yaklaşan</div>
+          <div style="height:24px; padding:0 10px; border-radius:999px; background:#202024; color:#6B6B72; font-size:13px; font-weight:500; display:flex; align-items:center">Tamamlanan</div>
+        </div>
+      </div>
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:10px">
+        <div style="font-size:17px; line-height:22px; font-weight:600">Semantik kurallar</div>
+        <div style="font-size:13px; line-height:19px; color:#A1A1AA">1 · Durum: Devam Eden <span style="color:#22C55E">success</span> · Yaklaşan <span style="color:#F59E0B">warning</span> · Tamamlanan <span style="color:#6B6B72">textTertiary</span>. Liste kartında düz metin, detayda pill.</div>
+        <div style="font-size:13px; line-height:19px; color:#A1A1AA">2 · Sayısal ton: satılan / artış / “+” → <span style="color:#22C55E">success</span>; kalan / azalış → <span style="color:#EF4444">danger</span>; nötr toplam → beyaz.</div>
+        <div style="font-size:13px; line-height:19px; color:#A1A1AA">3 · Firma renkleri her yerde aynı token: donut, legend, yatay barlar, Firmalar raporu.</div>
+        <div style="font-size:13px; line-height:19px; color:#A1A1AA">4 · Her etkinliğin bir <span style="font-family:'JetBrains Mono',monospace">accentColor</span> alanı vardır; liste kartındaki progress bunu kullanır, tanımsızsa <span style="color:#3B82F6">info</span>.</div>
+        <div style="font-size:13px; line-height:19px; color:#A1A1AA">5 · <span style="color:#E5233D">primary</span> veri rengi olarak kullanılmaz — “Kalan” için <span style="color:#EF4444">danger</span> vardır.</div>
+        <div style="font-size:13px; line-height:19px; color:#A1A1AA">6 · Yeni renk icat edilmez; eksikte <span style="font-family:'JetBrains Mono',monospace">surfaceAlt</span> veya <span style="font-family:'JetBrains Mono',monospace">textSecondary</span>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. TIPOGRAFI -->
+  <div style="width:100%; max-width:1080px; display:flex; flex-direction:column; gap:20px">
+    <div style="display:flex; align-items:baseline; gap:12px; border-bottom:1px solid #2A2A2E; padding-bottom:12px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">02</div>
+      <div style="font-size:22px; line-height:28px; font-weight:700">Tipografi</div>
+      <div style="font-size:13px; color:#A1A1AA">Inter · tüm sayılarda tabular figures (tnum) zorunlu</div>
+    </div>
+
+    <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; overflow:hidden; display:flex; flex-direction:column">
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:12px 16px; border-bottom:1px solid #2A2A2E; font-size:12px; color:#6B6B72; font-family:'JetBrains Mono',monospace">
+        <div>token</div><div>boyut / satır</div><div>ağırlık</div><div>örnek</div>
+      </div>
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:16px; border-bottom:1px solid #2A2A2E; align-items:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px">displayNum</div>
+        <div style="font-size:13px; color:#A1A1AA">32 / 38</div>
+        <div style="font-size:13px; color:#A1A1AA">Bold</div>
+        <div style="font-size:32px; line-height:38px; font-weight:700; color:#22C55E">+2.846</div>
+      </div>
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:16px; border-bottom:1px solid #2A2A2E; align-items:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px">numL</div>
+        <div style="font-size:13px; color:#A1A1AA">24 / 28</div>
+        <div style="font-size:13px; color:#A1A1AA">Bold</div>
+        <div style="font-size:24px; line-height:28px; font-weight:700">12.842.600 ₺</div>
+      </div>
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:16px; border-bottom:1px solid #2A2A2E; align-items:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px">numM</div>
+        <div style="font-size:13px; color:#A1A1AA">20 / 24</div>
+        <div style="font-size:13px; color:#A1A1AA">SemiBold</div>
+        <div style="font-size:20px; line-height:24px; font-weight:600">850 · 643 · 207</div>
+      </div>
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:16px; border-bottom:1px solid #2A2A2E; align-items:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px">titleL</div>
+        <div style="font-size:13px; color:#A1A1AA">22 / 28</div>
+        <div style="font-size:13px; color:#A1A1AA">Bold</div>
+        <div style="font-size:22px; line-height:28px; font-weight:700">Çok Güzel Hareketler 2</div>
+      </div>
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:16px; border-bottom:1px solid #2A2A2E; align-items:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px">titleM</div>
+        <div style="font-size:13px; color:#A1A1AA">17 / 22</div>
+        <div style="font-size:13px; color:#A1A1AA">SemiBold</div>
+        <div style="font-size:17px; line-height:22px; font-weight:600">Satış Dağılımı (Tüm Etkinlikler)</div>
+      </div>
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:16px; border-bottom:1px solid #2A2A2E; align-items:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px">body</div>
+        <div style="font-size:13px; color:#A1A1AA">15 / 20</div>
+        <div style="font-size:13px; color:#A1A1AA">Regular · SemiBold</div>
+        <div style="font-size:15px; line-height:20px">15 Mayıs 2026 &nbsp;<span style="font-weight:600; color:#22C55E">529</span></div>
+      </div>
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:16px; border-bottom:1px solid #2A2A2E; align-items:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px">label</div>
+        <div style="font-size:13px; color:#A1A1AA">13 / 18</div>
+        <div style="font-size:13px; color:#A1A1AA">Medium</div>
+        <div style="font-size:13px; line-height:18px; font-weight:500">Devam Eden · %18,6 · Biletix</div>
+      </div>
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:16px; border-bottom:1px solid #2A2A2E; align-items:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px">caption</div>
+        <div style="font-size:13px; color:#A1A1AA">12 / 16</div>
+        <div style="font-size:13px; color:#A1A1AA">Regular</div>
+        <div style="font-size:12px; line-height:16px; color:#A1A1AA">Toplam Satılan · Doluluk · İstanbul - Zorlu PSM</div>
+      </div>
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:16px; border-bottom:1px solid #2A2A2E; align-items:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px">micro</div>
+        <div style="font-size:13px; color:#A1A1AA">11 / 14</div>
+        <div style="font-size:13px; color:#A1A1AA">Regular</div>
+        <div style="font-size:11px; line-height:14px; color:#A1A1AA">Gösteri · satılan · bilet · (%43,9) · 2K</div>
+      </div>
+      <div style="display:grid; grid-template-columns:150px 110px 130px 1fr; gap:16px; padding:16px; align-items:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px">navLabel</div>
+        <div style="font-size:13px; color:#A1A1AA">10 / 12</div>
+        <div style="font-size:13px; color:#A1A1AA">Medium</div>
+        <div style="font-size:10px; line-height:12px; font-weight:500; color:#A1A1AA">Ana Sayfa · Etkinlikler · Raporlar · Takvim · Ayarlar</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SPACING & SEKIL -->
+  <div style="width:100%; max-width:1080px; display:flex; flex-direction:column; gap:20px">
+    <div style="display:flex; align-items:baseline; gap:12px; border-bottom:1px solid #2A2A2E; padding-bottom:12px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">03</div>
+      <div style="font-size:22px; line-height:28px; font-weight:700">Spacing, şekil ve ölçü</div>
+      <div style="font-size:13px; color:#A1A1AA">8 pt grid (4 pt yarım adım)</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px">
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:12px">
+        <div style="font-size:17px; line-height:22px; font-weight:600">Spacing</div>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <div style="display:flex; align-items:center; gap:10px"><div style="width:16px; height:8px; background:#E5233D; border-radius:2px; flex:none"></div><div style="font-size:13px; color:#A1A1AA">Ekran yatay padding <span style="color:#fff; font-family:'JetBrains Mono',monospace">16</span></div></div>
+          <div style="display:flex; align-items:center; gap:10px"><div style="width:16px; height:8px; background:#E5233D; border-radius:2px; flex:none"></div><div style="font-size:13px; color:#A1A1AA">Kart iç padding <span style="color:#fff; font-family:'JetBrains Mono',monospace">16</span></div></div>
+          <div style="display:flex; align-items:center; gap:10px"><div style="width:12px; height:8px; background:#3B82F6; border-radius:2px; flex:none"></div><div style="font-size:13px; color:#A1A1AA">Kartlar arası <span style="color:#fff; font-family:'JetBrains Mono',monospace">12</span></div></div>
+          <div style="display:flex; align-items:center; gap:10px"><div style="width:8px; height:8px; background:#3B82F6; border-radius:2px; flex:none"></div><div style="font-size:13px; color:#A1A1AA">Bölüm başlığı → kart <span style="color:#fff; font-family:'JetBrains Mono',monospace">8</span></div></div>
+          <div style="display:flex; align-items:center; gap:10px"><div style="width:20px; height:8px; background:#8B5CF6; border-radius:2px; flex:none"></div><div style="font-size:13px; color:#A1A1AA">Bölümler arası <span style="color:#fff; font-family:'JetBrains Mono',monospace">20</span></div></div>
+        </div>
+      </div>
+
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:14px">
+        <div style="font-size:17px; line-height:22px; font-weight:600">Radius</div>
+        <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap">
+          <div style="display:flex; flex-direction:column; gap:6px; align-items:center"><div style="width:56px; height:44px; background:#202024; border:1px solid #2A2A2E; border-radius:16px"></div><div style="font-size:11px; color:#A1A1AA">kart 16</div></div>
+          <div style="display:flex; flex-direction:column; gap:6px; align-items:center"><div style="width:48px; height:44px; background:#202024; border:1px solid #2A2A2E; border-radius:12px"></div><div style="font-size:11px; color:#A1A1AA">hücre 12</div></div>
+          <div style="display:flex; flex-direction:column; gap:6px; align-items:center"><div style="width:32px; height:32px; background:#202024; border:1px solid #2A2A2E; border-radius:10px"></div><div style="font-size:11px; color:#A1A1AA">ikon 10</div></div>
+          <div style="display:flex; flex-direction:column; gap:6px; align-items:center"><div style="width:56px; height:24px; background:#202024; border:1px solid #2A2A2E; border-radius:999px"></div><div style="font-size:11px; color:#A1A1AA">pill 999</div></div>
+          <div style="display:flex; flex-direction:column; gap:6px; align-items:center"><div style="width:32px; height:36px; background:#3B82F6; border-radius:4px 4px 0 0"></div><div style="font-size:11px; color:#A1A1AA">bar üst 4</div></div>
+        </div>
+        <div style="font-size:12px; line-height:17px; color:#A1A1AA">Afiş: liste 10 · detay 12. Kartlarda 1 pt <span style="font-family:'JetBrains Mono',monospace">border</span>. Gölge yok, blur yok — tamamen flat.</div>
+      </div>
+
+      <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:12px">
+        <div style="font-size:17px; line-height:22px; font-weight:600">Sabit ölçüler</div>
+        <div style="display:flex; flex-direction:column; gap:7px; font-size:13px; color:#A1A1AA">
+          <div style="display:flex; justify-content:space-between"><span>App bar</span><span style="color:#fff; font-family:'JetBrains Mono',monospace">56</span></div>
+          <div style="display:flex; justify-content:space-between"><span>Bottom nav</span><span style="color:#fff; font-family:'JetBrains Mono',monospace">56 + safe</span></div>
+          <div style="display:flex; justify-content:space-between"><span>Filter chip</span><span style="color:#fff; font-family:'JetBrains Mono',monospace">32</span></div>
+          <div style="display:flex; justify-content:space-between"><span>Dropdown chip</span><span style="color:#fff; font-family:'JetBrains Mono',monospace">28</span></div>
+          <div style="display:flex; justify-content:space-between"><span>Progress: liste / detay / firma</span><span style="color:#fff; font-family:'JetBrains Mono',monospace">4 / 6 / 4</span></div>
+          <div style="display:flex; justify-content:space-between"><span>Takvim hücresi</span><span style="color:#fff; font-family:'JetBrains Mono',monospace">40×40</span></div>
+          <div style="display:flex; justify-content:space-between"><span>Dokunma hedefi</span><span style="color:#fff; font-family:'JetBrains Mono',monospace">min 44×44</span></div>
+          <div style="display:flex; justify-content:space-between"><span>Safe area üst / alt</span><span style="color:#fff; font-family:'JetBrains Mono',monospace">47 / 34</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. IKON & FORMAT -->
+  <div style="width:100%; max-width:1080px; display:grid; grid-template-columns:1fr 1fr; gap:12px">
+    <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:12px">
+      <div style="font-size:17px; line-height:22px; font-weight:600">İkon seti</div>
+      <div style="font-size:13px; line-height:19px; color:#A1A1AA">Tek set: <span style="color:#fff">Lucide</span> (<span style="font-family:'JetBrains Mono',monospace">lucide_icons</span>) ya da Material Symbols Rounded. Karıştırma yok. Boyut: nav 24 · satır içi 20 · chip/etiket içi 16 · KPI konteyneri 18.</div>
+      <div style="font-size:13px; line-height:19px; color:#A1A1AA">Kullanılan semboller: home, ticket, ticket-check, bar-chart, calendar, settings, menu, search, share, bell, chevron-left/right/down, arrow-left, map-pin, banknote, trending-up, clock, tag.</div>
+    </div>
+    <div style="background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:10px">
+      <div style="font-size:17px; line-height:22px; font-weight:600">Format kuralları (tr_TR)</div>
+      <div style="display:flex; flex-direction:column; gap:6px; font-size:13px; color:#A1A1AA">
+        <div>Binlik nokta, ondalık virgül — <span style="color:#fff; font-family:'JetBrains Mono',monospace">12.842</span> · <span style="color:#fff; font-family:'JetBrains Mono',monospace">%68,4</span></div>
+        <div>Yüzde işareti önde — <span style="color:#fff; font-family:'JetBrains Mono',monospace">%71,2</span></div>
+        <div>Para: değer + boşluk + ₺ — <span style="color:#fff; font-family:'JetBrains Mono',monospace">12.842.600 ₺</span></div>
+        <div>Artış “+”, azalış “−” ve <span style="color:#EF4444">danger</span></div>
+        <div>Tarih <span style="color:#fff; font-family:'JetBrains Mono',monospace">15 Mayıs 2026 - 20:30</span> · hafta Pazartesi başlar</div>
+        <div>Eksen kısaltması <span style="color:#fff; font-family:'JetBrains Mono',monospace">2K / 4K / 6K</span> · sayılar tabular ve sağa dayalı</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. JSON -->
+  <div style="width:100%; max-width:1080px; display:flex; flex-direction:column; gap:16px">
+    <div style="display:flex; align-items:baseline; gap:12px; border-bottom:1px solid #2A2A2E; padding-bottom:12px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6B6B72">04</div>
+      <div style="font-size:22px; line-height:28px; font-weight:700">Token JSON</div>
+      <div style="font-size:13px; color:#A1A1AA">Flutter ThemeData / AppTokens'a taşımak için</div>
+    </div>
+    <pre style="margin:0; background:#151517; border:1px solid #2A2A2E; border-radius:16px; padding:20px; overflow-x:auto; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:20px; color:#A1A1AA; white-space:pre">{
+  "color": {
+    "bg": "#000000", "surface": "#151517", "surfaceAlt": "#202024", "border": "#2A2A2E",
+    "textPrimary": "#FFFFFF", "textSecondary": "#A1A1AA", "textTertiary": "#6B6B72",
+    "primary": "#E5233D", "onPrimary": "#FFFFFF",
+    "success": "#22C55E", "warning": "#F59E0B", "danger": "#EF4444",
+    "info": "#3B82F6", "purple": "#8B5CF6",
+    "vendor": { "biletix": "#3B82F6", "bubilet": "#14B8A6", "biletinial": "#F97316", "diger": "#6B7280" },
+    "tintOpacity": 0.15
+  },
+  "radius": { "card": 16, "cell": 12, "icon": 10, "posterList": 10, "posterDetail": 12, "pill": 999, "barTop": 4 },
+  "space": { "screenX": 16, "cardPadding": 16, "cardGap": 12, "titleGap": 8, "sectionGap": 20, "chipGap": 8 },
+  "size": {
+    "appBar": 56, "bottomNav": 56, "filterChip": 32, "dropdownChip": 28,
+    "progressList": 4, "progressDetail": 6, "progressVendor": 4,
+    "calendarCell": 40, "donutDiameter": 120, "donutThickness": 24, "minTouch": 44
+  },
+  "type": {
+    "displayNum": { "size": 32, "lineHeight": 38, "weight": 700, "tabular": true },
+    "numL":       { "size": 24, "lineHeight": 28, "weight": 700, "tabular": true },
+    "numM":       { "size": 20, "lineHeight": 24, "weight": 600, "tabular": true },
+    "titleL":     { "size": 22, "lineHeight": 28, "weight": 700 },
+    "titleM":     { "size": 17, "lineHeight": 22, "weight": 600 },
+    "body":       { "size": 15, "lineHeight": 20, "weight": 400, "tabular": true },
+    "label":      { "size": 13, "lineHeight": 18, "weight": 500, "tabular": true },
+    "caption":    { "size": 12, "lineHeight": 16, "weight": 400 },
+    "micro":      { "size": 11, "lineHeight": 14, "weight": 400, "tabular": true },
+    "navLabel":   { "size": 10, "lineHeight": 12, "weight": 500 }
+  },
+  "font": { "family": "Inter", "features": ["tnum"] },
+  "theme": { "brightness": "dark", "lightTheme": false, "elevation": 0 }
+}</pre>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>
