@@ -1,0 +1,29 @@
+# Derleme bağlamını küçük tut — imaja girmesi gerekmeyen her şey.
+.git
+.gitignore
+node_modules
+.next
+out
+build
+
+# Flutter uygulaması ayrı imajda derlenir (mobile/Dockerfile).
+mobile
+
+# Tasarım kaynakları
+design
+
+# Sırlar — asla imaja girmez
+.env
+.env.local
+.env.*.local
+
+# Araç ve editör
+.vscode
+.idea
+.claude
+*.log
+npm-debug.log*
+Dockerfile
+docker-compose.yml
+.dockerignore
+README.md

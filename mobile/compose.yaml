@@ -1,0 +1,11 @@
+﻿name: biletfy-mobile
+
+services:
+  mobile:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: biletfy-mobile
+    ports:
+      - "3002:80"
+    restart: unless-stopped
