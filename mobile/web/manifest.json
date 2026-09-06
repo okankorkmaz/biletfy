@@ -1,6 +1,6 @@
 {
-    "name": "Biletfy",
-    "short_name": "Biletfy",
+    "name": "biletify",
+    "short_name": "biletify",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#000000",
