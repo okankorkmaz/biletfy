@@ -1,0 +1,11 @@
+.dart_tool
+.idea
+build
+android/.gradle
+android/.kotlin
+ios/Pods
+windows/flutter/ephemeral
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+*.log
