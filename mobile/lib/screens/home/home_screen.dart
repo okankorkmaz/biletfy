@@ -117,11 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
             AppSpace.sectionGap,
           ),
           children: [
-            _OverviewHeader(
-              period: _period,
-              onPeriodChanged: _selectPeriod,
-              updatedAt: _overview,
-            ),
+            _OverviewHeader(period: _period, onPeriodChanged: _selectPeriod),
             const SizedBox(height: AppSpace.titleGap),
 
             // --- KPI 2×2 ---
@@ -227,53 +223,25 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-/// "Genel Bakış" satırı + dönem chip'i; altında son güncelleme damgası.
+/// "Genel Bakış" satırı + dönem chip'i.
 class _OverviewHeader extends StatelessWidget {
-  const _OverviewHeader({
-    required this.period,
-    required this.onPeriodChanged,
-    required this.updatedAt,
-  });
+  const _OverviewHeader({required this.period, required this.onPeriodChanged});
 
   final OverviewPeriod period;
   final ValueChanged<OverviewPeriod> onPeriodChanged;
-  final Future<Overview>? updatedAt;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        Row(
-          children: [
-            Expanded(child: Text('Genel Bakış', style: AppTypography.titleM)),
-            DropdownChip(
-              label: period.label,
-              sheetTitle: 'Dönem',
-              options: [
-                for (final option in OverviewPeriod.values) option.label,
-              ],
-              onSelected: (value) => onPeriodChanged(
-                OverviewPeriod.values.firstWhere(
-                  (option) => option.label == value,
-                ),
-              ),
-            ),
-          ],
-        ),
-        FutureBuilder<Overview>(
-          future: updatedAt,
-          builder: (context, snapshot) {
-            final overview = snapshot.data;
-            if (overview == null) return const SizedBox.shrink();
-            return Padding(
-              padding: const EdgeInsets.only(top: AppSpace.xs),
-              child: Text(
-                'Son güncelleme ${Tr.shortStamp(overview.updatedAt)}',
-                style: AppTypography.caption,
-              ),
-            );
-          },
+        Expanded(child: Text('Genel Bakış', style: AppTypography.titleM)),
+        DropdownChip(
+          label: period.label,
+          sheetTitle: 'Dönem',
+          options: [for (final option in OverviewPeriod.values) option.label],
+          onSelected: (value) => onPeriodChanged(
+            OverviewPeriod.values.firstWhere((option) => option.label == value),
+          ),
         ),
       ],
     );
