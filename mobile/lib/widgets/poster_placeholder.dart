@@ -10,22 +10,29 @@ import '../theme/app_typography.dart';
 /// Ölçüler: liste 76 (radius 10) · detay 96 (radius 12).
 class PosterPlaceholder extends StatelessWidget {
   /// Liste kartındaki 76×76 afiş.
-  const PosterPlaceholder.list({super.key, required this.initials})
-    : size = AppSize.posterList,
-      radius = AppRadius.posterList;
+  const PosterPlaceholder.list({
+    super.key,
+    required this.initials,
+    this.imageAsset,
+  }) : size = AppSize.posterList,
+       radius = AppRadius.posterList;
 
   /// Detay ekranındaki 96×96 afiş.
-  const PosterPlaceholder.detail({super.key, required this.initials})
-    : size = AppSize.posterDetail,
-      radius = AppRadius.posterDetail;
+  const PosterPlaceholder.detail({
+    super.key,
+    required this.initials,
+    this.imageAsset,
+  }) : size = AppSize.posterDetail,
+       radius = AppRadius.posterDetail;
 
   final String initials;
+  final String? imageAsset;
   final double size;
   final double radius;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final fallback = Container(
       width: size,
       height: size,
       alignment: Alignment.center,
@@ -40,6 +47,18 @@ class PosterPlaceholder extends StatelessWidget {
       child: Text(
         initials,
         style: AppTypography.titleM.copyWith(color: AppColors.textSecondary),
+      ),
+    );
+    if (imageAsset == null) return fallback;
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(radius),
+      child: Image.asset(
+        imageAsset!,
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+        errorBuilder: (_, _, _) => fallback,
       ),
     );
   }

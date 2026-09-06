@@ -85,7 +85,10 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
             for (final show in shows)
               ListTile(
                 minTileHeight: AppSize.minTouch,
-                title: Text(Tr.dateTime(show.dateTime), style: AppTypography.body),
+                title: Text(
+                  Tr.dateTime(show.dateTime),
+                  style: AppTypography.body,
+                ),
                 subtitle: Text(show.venueLabel, style: AppTypography.caption),
                 selected: show.id == _selectedShow?.id,
                 selectedColor: AppColors.primary,
@@ -120,13 +123,17 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           return switch (_tabIndex) {
             0 => DetailOverviewTab(
               show: show,
+              imageAsset: widget.event.imageAsset,
               onPickShow: shows.length > 1 ? () => _pickShow(shows) : null,
             ),
             1 => DailySalesView(eventId: widget.event.id),
             _ => DetailShowsTab(
               shows: shows,
               selectedShow: show,
-              onSelectShow: (picked) => setState(() => _selectedShow = picked),
+              onSelectShow: (picked) => setState(() {
+                _selectedShow = picked;
+                _tabIndex = 0;
+              }),
             ),
           };
         },

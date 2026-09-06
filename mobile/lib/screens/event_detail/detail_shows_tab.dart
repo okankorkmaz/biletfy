@@ -63,7 +63,10 @@ class _DetailShowsTabState extends State<DetailShowsTab> {
         AppSpace.sectionGap,
       ),
       children: [
-        Text('Gösteriler', style: AppTypography.titleM),
+        Text(
+          'Gösteriler (${Tr.number(widget.shows.length)})',
+          style: AppTypography.titleM,
+        ),
         const SizedBox(height: AppSpace.titleGap),
         for (final show in widget.shows) ...[
           _ShowRow(

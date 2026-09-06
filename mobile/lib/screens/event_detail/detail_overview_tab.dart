@@ -11,9 +11,15 @@ import '../../widgets/widgets.dart';
 ///
 /// EventHeader · StatTrio + doluluk barı · KPI ×2 · firma dağılımı.
 class DetailOverviewTab extends StatelessWidget {
-  const DetailOverviewTab({super.key, required this.show, this.onPickShow});
+  const DetailOverviewTab({
+    super.key,
+    required this.show,
+    this.imageAsset,
+    this.onPickShow,
+  });
 
   final Show show;
+  final String? imageAsset;
 
   /// Seride birden fazla gösteri varsa tarih satırı seçici olur.
   final VoidCallback? onPickShow;
@@ -28,7 +34,7 @@ class DetailOverviewTab extends StatelessWidget {
         AppSpace.sectionGap,
       ),
       children: [
-        EventHeader(show: show, onPickShow: onPickShow),
+        EventHeader(show: show, imageAsset: imageAsset, onPickShow: onPickShow),
         const SizedBox(height: AppSpace.cardPadding),
 
         SectionCard(

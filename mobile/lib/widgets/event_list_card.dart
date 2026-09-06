@@ -36,10 +36,7 @@ class EventListCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: AppRadius.cardR,
-        border: Border.all(
-          color: AppColors.border,
-          width: AppSize.borderWidth,
-        ),
+        border: Border.all(color: AppColors.border, width: AppSize.borderWidth),
       ),
       child: Material(
         color: Colors.transparent,
@@ -58,7 +55,10 @@ class EventListCard extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PosterPlaceholder.list(initials: event.initials),
+                    PosterPlaceholder.list(
+                      initials: event.initials,
+                      imageAsset: event.imageAsset,
+                    ),
                     const SizedBox(width: AppSpace.listCardPadding),
                     Expanded(
                       child: Column(

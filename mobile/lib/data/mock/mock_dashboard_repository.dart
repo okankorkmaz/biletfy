@@ -41,27 +41,45 @@ class MockDashboardRepository implements DashboardRepository {
   @override
   Future<Overview> overview(OverviewPeriod period) {
     final base = MockFixtures.overview;
-    // Dönem daraldıkça toplamlar küçülür; oranlar korunur.
-    final factor = switch (period) {
-      OverviewPeriod.bugun => 1.0,
-      OverviewPeriod.buHafta => 1.0,
-      OverviewPeriod.buAy => 1.0,
-      OverviewPeriod.tumu => 1.0,
+    final (totalEvents, totalSold, occupancy) = switch (period) {
+      OverviewPeriod.bugun => (4, MockFixtures.dailySummary.today, 64.8),
+      OverviewPeriod.buHafta => (12, MockFixtures.dailySummary.last7Days, 67.1),
+      OverviewPeriod.buAy => (23, base.totalSold, 68.4),
+      OverviewPeriod.tumu => (base.totalEvents, base.totalSold, 68.4),
     };
+    final revenuePerTicket = base.totalRevenue / base.totalSold;
     return _respond(
       Overview(
-        totalEvents: base.totalEvents,
-        totalSold: (base.totalSold * factor).round(),
-        totalRevenue: (base.totalRevenue * factor).round(),
-        avgOccupancy: base.avgOccupancy,
+        totalEvents: totalEvents,
+        totalSold: totalSold,
+        totalRevenue: (totalSold * revenuePerTicket).round(),
+        avgOccupancy: occupancy,
         updatedAt: base.updatedAt,
       ),
     );
   }
 
   @override
-  Future<List<VendorShare>> vendorBreakdown({DateTimeRange? range}) =>
-      _respond(empty ? const <VendorShare>[] : MockFixtures.vendorBreakdown);
+  Future<List<VendorShare>> vendorBreakdown({DateTimeRange? range}) {
+    if (empty) return _respond(const <VendorShare>[]);
+    final days = range == null
+        ? null
+        : range.end.difference(range.start).inDays + 1;
+    final periodSold = days == 1
+        ? MockFixtures.dailySummary.today
+        : days != null && days <= 7
+        ? MockFixtures.dailySummary.last7Days
+        : MockFixtures.overview.totalSold;
+    final factor = periodSold / MockFixtures.overview.totalSold;
+    return _respond([
+      for (final share in MockFixtures.vendorBreakdown)
+        VendorShare(
+          vendor: share.vendor,
+          sold: (share.sold * factor).round(),
+          pct: share.pct,
+        ),
+    ]);
+  }
 
   @override
   Future<DailySalesSummary> dailySummary(int days) =>
@@ -92,9 +110,7 @@ class MockDashboardRepository implements DashboardRepository {
   Future<Show> show(String showId) {
     final match = MockFixtures.shows.where((show) => show.id == showId);
     if (match.isEmpty) {
-      return Future<Show>.error(
-        const DashboardException('Gösteri bulunamadı'),
-      );
+      return Future<Show>.error(const DashboardException('Gösteri bulunamadı'));
     }
     return _respond(match.first);
   }
@@ -195,10 +211,21 @@ class MockDashboardRepository implements DashboardRepository {
 
   @override
   Future<Set<DateTime>> eventDaysOfMonth(DateTime month) {
-    if (month.year == 2026 && month.month == 5) {
-      return _respond(MockFixtures.mayEventDays);
-    }
-    return _respond(const <DateTime>{});
+    final days = MockFixtures.shows
+        .where(
+          (show) =>
+              show.dateTime.year == month.year &&
+              show.dateTime.month == month.month,
+        )
+        .map(
+          (show) => DateTime(
+            show.dateTime.year,
+            show.dateTime.month,
+            show.dateTime.day,
+          ),
+        )
+        .toSet();
+    return _respond(days);
   }
 
   // --- Raporlar ---

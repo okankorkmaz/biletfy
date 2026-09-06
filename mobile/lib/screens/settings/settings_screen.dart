@@ -8,6 +8,7 @@ import '../../theme/app_colors.dart';
 import '../../theme/app_dimens.dart';
 import '../../theme/app_typography.dart';
 import '../../widgets/widgets.dart';
+import 'profile_screen.dart';
 
 /// Uygulama sürümü — tek yerde tutulur (drawer da buradan okur).
 const String kAppVersion = '0.1.0 (1)';
@@ -16,9 +17,10 @@ const String kAppVersion = '0.1.0 (1)';
 ///
 /// Hesap · bildirim tercihleri · veri kaynakları · biçim · hakkında.
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key, this.onOpenDrawer});
+  const SettingsScreen({super.key, this.onOpenDrawer, this.onLogout});
 
   final VoidCallback? onOpenDrawer;
+  final VoidCallback? onLogout;
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -26,6 +28,13 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   late DashboardRepository _repository;
+
+  ProfileData _profile = const ProfileData(
+    fullName: 'Okan Korkmaz',
+    email: 'okan.korkmaz@biletfy.com',
+    phone: '',
+    company: 'BKM Mutfak',
+  );
 
   bool _dailySummaryEnabled = true;
   TimeOfDay _summaryTime = const TimeOfDay(hour: 9, minute: 0);
@@ -53,9 +62,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       initialTime: _summaryTime,
       builder: (context, child) => MediaQuery(
         // 24 saat biçimi — tr_TR kuralı.
-        data: MediaQuery.of(
-          context,
-        ).copyWith(alwaysUse24HourFormat: true),
+        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
         child: child!,
       ),
     );
@@ -98,13 +105,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (picked != null) setState(() => _occupancyThreshold = picked);
   }
 
+  Future<void> _openProfile() async {
+    final updated = await Navigator.of(context).push<ProfileData>(
+      MaterialPageRoute<ProfileData>(
+        builder: (_) => ProfileScreen(profile: _profile),
+      ),
+    );
+    if (updated != null && mounted) setState(() => _profile = updated);
+  }
+
+  Future<void> _confirmLogout() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Çıkış yapılsın mı?'),
+        content: const Text('Biletfy oturumunuz kapatılacak.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Vazgeç'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Çıkış Yap'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) widget.onLogout?.call();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBar.root(
-        title: 'Ayarlar',
-        onMenuTap: widget.onOpenDrawer,
-      ),
+      appBar: AppTopBar.root(title: 'Ayarlar', onMenuTap: widget.onOpenDrawer),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(
           AppSpace.screenX,
@@ -117,9 +151,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: 'Hesap',
             rows: [
               SettingsRow(
-                label: 'Okan Korkmaz',
-                detail: 'Prodüksiyon · BKM Mutfak',
-                onTap: () {},
+                label: _profile.fullName,
+                detail: 'Prodüksiyon · ${_profile.company}',
+                onTap: _openProfile,
               ),
             ],
           ),
@@ -181,7 +215,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SettingsRow(
                 label: 'Çıkış',
                 labelColor: AppColors.danger,
-                onTap: () {},
+                onTap: widget.onLogout == null ? null : _confirmLogout,
               ),
             ],
           ),

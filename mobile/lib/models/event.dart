@@ -32,6 +32,7 @@ class Event {
     required this.occupancyPct,
     this.accentColor,
     this.occupancyDelta,
+    this.imageAsset,
   });
 
   final String id;
@@ -51,6 +52,9 @@ class Event {
 
   /// Opsiyonel doluluk değişim rozeti — ya tüm kartlarda ya hiç.
   final int? occupancyDelta;
+
+  /// Uygulama paketindeki etkinlik afişi. Yoksa baş harfli görsel kullanılır.
+  final String? imageAsset;
 
   /// Afiş yerine kullanılacak baş harfler.
   String get initials {

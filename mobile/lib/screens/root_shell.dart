@@ -15,9 +15,10 @@ import 'settings/settings_screen.dart';
 /// bu kabuğun üstüne itilir; kabuk arkada kaldığı için alt navigasyon
 /// otomatik olarak gizlenir.
 class RootShell extends StatefulWidget {
-  const RootShell({super.key, this.initialTab = RootTab.home});
+  const RootShell({super.key, this.initialTab = RootTab.home, this.onLogout});
 
   final RootTab initialTab;
+  final VoidCallback? onLogout;
 
   @override
   State<RootShell> createState() => _RootShellState();
@@ -33,9 +34,7 @@ class _RootShellState extends State<RootShell> {
   void _openDrawer() => _scaffoldKey.currentState?.openDrawer();
 
   void _push(Widget screen) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => screen),
-    );
+    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => screen));
   }
 
   @override
@@ -59,7 +58,7 @@ class _RootShellState extends State<RootShell> {
           EventsScreen(onOpenDrawer: _openDrawer),
           ReportsScreen(onOpenDrawer: _openDrawer),
           CalendarScreen(onOpenDrawer: _openDrawer),
-          SettingsScreen(onOpenDrawer: _openDrawer),
+          SettingsScreen(onOpenDrawer: _openDrawer, onLogout: widget.onLogout),
         ],
       ),
       bottomNavigationBar: AppBottomNav(current: _current, onSelected: _select),

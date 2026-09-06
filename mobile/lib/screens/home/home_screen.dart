@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateTimeRange;
 
 import '../../core/formatters.dart';
 import '../../data/dashboard_repository.dart';
@@ -43,6 +43,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<List<VendorShare>>? _breakdown;
   Future<DailySalesSummary>? _summary;
 
+  DateTimeRange? get _periodRange {
+    final today = _repository.referenceDate;
+    return switch (_period) {
+      OverviewPeriod.bugun => DateTimeRange(start: today, end: today),
+      OverviewPeriod.buHafta => DateTimeRange(
+        start: today.subtract(const Duration(days: 6)),
+        end: today,
+      ),
+      OverviewPeriod.buAy => DateTimeRange(
+        start: DateTime(today.year, today.month),
+        end: today,
+      ),
+      OverviewPeriod.tumu => null,
+    };
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -53,16 +69,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void _load() {
     setState(() {
       _overview = _repository.overview(_period);
-      _breakdown = _repository.vendorBreakdown();
+      _breakdown = _repository.vendorBreakdown(range: _periodRange);
       _summary = _repository.dailySummary(_summaryDays);
     });
   }
 
   Future<void> _refresh() async {
     _load();
-    await Future.wait([_overview!, _breakdown!, _summary!]).catchError(
-      (_) => <Object>[],
-    );
+    await Future.wait([_overview!, _breakdown!, _summary!])
+        .catchError((_) => <Object>[]);
   }
 
   @override
@@ -164,8 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 options: const ['7 Gün', '30 Gün', '90 Gün'],
                 onSelected: (value) {
                   setState(
-                    () => _summaryDays =
-                        int.parse(value.split(' ').first),
+                    () => _summaryDays = int.parse(value.split(' ').first),
                   );
                   _load();
                 },

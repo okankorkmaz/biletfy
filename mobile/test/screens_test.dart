@@ -11,20 +11,21 @@ void main() {
 
   // Tasarım çerçevesi 390×844.
   setUp(() {
-    final view = TestWidgetsFlutterBinding.instance.platformDispatcher.views
-        .first;
+    final view =
+        TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;
     view.devicePixelRatio = 1.0;
     view.physicalSize = const Size(390, 844);
   });
 
   tearDown(() {
-    final view = TestWidgetsFlutterBinding.instance.platformDispatcher.views
-        .first;
+    final view =
+        TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;
     view.resetPhysicalSize();
     view.resetDevicePixelRatio();
   });
 
   Widget app({bool failing = false, bool empty = false}) => BiletfyApp(
+    initiallyAuthenticated: true,
     repository: MockDashboardRepository(
       latency: const Duration(milliseconds: 10),
       failing: failing,
@@ -74,10 +75,7 @@ void main() {
       await goToTab(tester, RootTab.events);
 
       // Chip satırı 390 pt'ye sığmaz; son chip lazy olduğu için önce kaydır.
-      await tester.drag(
-        find.byType(FilterChipRow),
-        const Offset(-200, 0),
-      );
+      await tester.drag(find.byType(FilterChipRow), const Offset(-200, 0));
       await tester.pumpAndSettle();
 
       // "Tamamlanan" hem chip'te hem kart durum metninde geçer — chip'i seç.
@@ -138,12 +136,35 @@ void main() {
 
       await tester.tap(find.text('Detaylar'));
       await tester.pumpAndSettle();
-      expect(find.text('Bilet Fiyat Kademeleri'), findsOneWidget);
+      expect(find.text('Gösteriler (8)'), findsOneWidget);
 
       await tester.tap(find.text('Günlük Satış').last);
       await tester.pumpAndSettle();
       expect(find.text('Günlük Satış Rakamları'), findsOneWidget);
     });
+
+    testWidgets(
+      'sekiz gösteriyi listeler ve seçilen gösterinin detayını açar',
+      (tester) async {
+        await openDetail(tester);
+
+        await tester.tap(find.text('Detaylar'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Gösteriler (8)'), findsOneWidget);
+        expect(find.text('Zorlu PSM - İstanbul'), findsOneWidget);
+
+        await scrollToVertical(tester, find.text('Congresium Ankara - Ankara'));
+        await tester.tap(find.text('Congresium Ankara - Ankara'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Ankara - Congresium Ankara'), findsOneWidget);
+        expect(find.text('16 Mayıs 2026 - 20:30'), findsOneWidget);
+        expect(find.text('1.000'), findsOneWidget);
+        expect(find.text('720'), findsWidgets);
+        expect(find.text('%72,0'), findsOneWidget);
+      },
+    );
   });
 
   group('04_GunlukSatis', () {
@@ -228,6 +249,32 @@ void main() {
       expect(find.text('Etkinlik Detayı'), findsOneWidget);
       expect(find.byType(AppBottomNav), findsNothing);
     });
+
+    testWidgets('işaretli gün seçilince o günün gösterileri yüklenir', (
+      tester,
+    ) async {
+      await goToTab(tester, RootTab.calendar);
+
+      await tester.tap(find.text('16'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('16 Mayıs 2026 Cumartesi'), findsOneWidget);
+      expect(find.text('Çok Güzel Hareketler 2'), findsOneWidget);
+      expect(find.text('Congresium Ankara - Ankara'), findsOneWidget);
+      expect(find.text('720'), findsOneWidget);
+    });
+
+    testWidgets('işaretsiz gün seçilince doğru boş durum gösterilir', (
+      tester,
+    ) async {
+      await goToTab(tester, RootTab.calendar);
+
+      await tester.tap(find.text('14'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('14 Mayıs 2026 Perşembe'), findsOneWidget);
+      expect(find.text('Bu tarihte etkinlik bulunmuyor.'), findsOneWidget);
+    });
   });
 
   group('07_Ayarlar', () {
@@ -243,6 +290,27 @@ void main() {
       await scrollToVertical(tester, find.text('Sürüm'));
       expect(find.text('Türk lirası (₺)'), findsOneWidget);
       expect(find.text('Pazartesi'), findsOneWidget);
+    });
+
+    testWidgets('hesap satırı profil ekranını açar ve bilgiyi günceller', (
+      tester,
+    ) async {
+      await goToTab(tester, RootTab.settings);
+
+      await tester.tap(find.text('Okan Korkmaz'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Profil'), findsOneWidget);
+      expect(find.text('Hesap bilgileri'), findsOneWidget);
+      expect(find.text('okan.korkmaz@biletfy.com'), findsOneWidget);
+      expect(find.byType(AppBottomNav), findsNothing);
+
+      await tester.enterText(find.byType(TextFormField).first, 'Okan K.');
+      await tester.tap(find.text('Kaydet'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Okan K.'), findsOneWidget);
+      expect(find.byType(AppBottomNav), findsOneWidget);
     });
   });
 

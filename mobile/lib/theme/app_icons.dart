@@ -48,6 +48,13 @@ abstract final class AppIcons {
   static const IconData locale = LucideIcons.globe;
   static const IconData about = LucideIcons.info;
   static const IconData logout = LucideIcons.logOut;
+  static const IconData mail = LucideIcons.mail;
+  static const IconData lock = LucideIcons.lockKeyhole;
+  static const IconData eye = LucideIcons.eye;
+  static const IconData eyeOff = LucideIcons.eyeOff;
+  static const IconData arrowRight = LucideIcons.arrowRight;
+  static const IconData fingerprint = LucideIcons.fingerprint;
+  static const IconData shieldCheck = LucideIcons.shieldCheck;
 
   // Durumlar.
   static const IconData empty = LucideIcons.inbox;

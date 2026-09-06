@@ -14,9 +14,15 @@ import 'status_chip.dart';
 ///
 /// Tarih satırı aynı zamanda gösteri seçicidir (chevron-down).
 class EventHeader extends StatelessWidget {
-  const EventHeader({super.key, required this.show, this.onPickShow});
+  const EventHeader({
+    super.key,
+    required this.show,
+    this.imageAsset,
+    this.onPickShow,
+  });
 
   final Show show;
+  final String? imageAsset;
 
   /// Tarih satırına dokununca serinin diğer gösterilerini seçtirir.
   final VoidCallback? onPickShow;
@@ -32,6 +38,7 @@ class EventHeader extends StatelessWidget {
           children: [
             PosterPlaceholder.detail(
               initials: _initialsOf(show.eventTitle),
+              imageAsset: imageAsset,
             ),
             const SizedBox(width: AppSpace.cardPadding),
             Expanded(
@@ -41,10 +48,7 @@ class EventHeader extends StatelessWidget {
                 children: [
                   Text(show.eventTitle, style: AppTypography.titleL),
                   const SizedBox(height: AppSpace.chipGap),
-                  _MetaRow(
-                    icon: AppIcons.mapPin,
-                    text: show.locationLabel,
-                  ),
+                  _MetaRow(icon: AppIcons.mapPin, text: show.locationLabel),
                   const SizedBox(height: AppSpace.chipGap),
                   _MetaRow(
                     icon: AppIcons.calendar,
@@ -64,8 +68,10 @@ class EventHeader extends StatelessWidget {
   }
 
   static String _initialsOf(String title) {
-    final words =
-        title.split(RegExp(r'\s+')).where((word) => word.isNotEmpty).toList();
+    final words = title
+        .split(RegExp(r'\s+'))
+        .where((word) => word.isNotEmpty)
+        .toList();
     if (words.isEmpty) return '';
     return words.take(3).map((word) => word[0].toUpperCase()).join();
   }

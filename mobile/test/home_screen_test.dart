@@ -11,20 +11,21 @@ void main() {
 
   // Tasarım çerçevesi 390×844 — testler de bu ölçüde koşar.
   setUp(() {
-    final view = TestWidgetsFlutterBinding.instance.platformDispatcher.views
-        .first;
+    final view =
+        TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;
     view.devicePixelRatio = 1.0;
     view.physicalSize = const Size(390, 844);
   });
 
   tearDown(() {
-    final view = TestWidgetsFlutterBinding.instance.platformDispatcher.views
-        .first;
+    final view =
+        TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;
     view.resetPhysicalSize();
     view.resetDevicePixelRatio();
   });
 
   Widget app({bool failing = false, bool empty = false}) => BiletfyApp(
+    initiallyAuthenticated: true,
     repository: MockDashboardRepository(
       latency: const Duration(milliseconds: 10),
       failing: failing,
@@ -48,16 +49,45 @@ void main() {
     await tester.pumpWidget(app());
     await tester.pumpAndSettle();
 
-    expect(find.text('28'), findsOneWidget);
-    expect(find.text('12.842'), findsWidgets);
-    expect(find.text('12.842.600 ₺'), findsOneWidget);
-    expect(find.text('%68,4'), findsOneWidget);
+    expect(find.text('4'), findsOneWidget);
+    expect(find.text('529'), findsWidgets);
+    expect(find.text('529.025 ₺'), findsOneWidget);
+    expect(find.text('%64,8'), findsOneWidget);
 
     // Günlük satış özeti — bölüm 10/2 düzeltmesi uygulanmış değerler.
     expect(find.text('+444'), findsOneWidget);
     expect(find.text('+529'), findsOneWidget);
     expect(find.text('+2.846'), findsOneWidget);
     expect(find.text('+407'), findsOneWidget);
+  });
+
+  testWidgets('dönem seçimi KPI ve satış dağılımını birlikte günceller', (
+    tester,
+  ) async {
+    await tester.pumpWidget(app());
+    await tester.pumpAndSettle();
+
+    expect(find.text('529'), findsWidgets);
+
+    await tester.tap(find.text('Bugün').first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Bu Hafta').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('12'), findsOneWidget);
+    expect(find.text('2.846'), findsWidgets);
+    expect(find.text('2.846.133 ₺'), findsOneWidget);
+    expect(find.text('%67,1'), findsOneWidget);
+
+    await tester.tap(find.text('Bu Hafta').first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Bu Ay').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('23'), findsOneWidget);
+    expect(find.text('12.842'), findsWidgets);
+    expect(find.text('12.842.600 ₺'), findsOneWidget);
+    expect(find.text('%68,4'), findsOneWidget);
   });
 
   testWidgets('donut legend firma paylarını gösterir', (tester) async {

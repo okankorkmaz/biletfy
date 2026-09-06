@@ -85,7 +85,10 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
         _ => _Title(title: title!, subtitle: subtitle),
       },
       centerTitle: _variant != _TopBarVariant.home,
-      actions: [?action, const SizedBox(width: AppSpace.screenX)],
+      actions: [
+        ?action,
+        const SizedBox(width: AppSpace.screenX),
+      ],
     );
   }
 }
@@ -169,26 +172,20 @@ class _TopBarIconButton extends StatelessWidget {
   }
 }
 
-/// Ana Sayfa app bar'ındaki logo placeholder — 64×32, gerçek SVG sonradan.
+/// Ana Sayfa app bar'ındaki BKM logosu — 64×32.
 class LogoPlaceholder extends StatelessWidget {
   const LogoPlaceholder({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSize.logoPlaceholder.width,
-      height: AppSize.logoPlaceholder.height,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppSpace.sm),
-        border: Border.all(
-          color: AppColors.border,
-          width: AppSize.borderWidth,
-        ),
-      ),
-      child: Text(
-        'LOGO',
-        style: AppTypography.micro.copyWith(color: AppColors.textTertiary),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppSpace.sm),
+      child: Image.asset(
+        'assets/images/bkm-logo.png',
+        width: AppSize.logoPlaceholder.width,
+        height: AppSize.logoPlaceholder.height,
+        fit: BoxFit.cover,
+        semanticLabel: 'BKM',
       ),
     );
   }

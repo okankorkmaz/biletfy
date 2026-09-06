@@ -48,6 +48,7 @@ abstract final class MockFixtures {
       totalSold: 5312,
       occupancyPct: 71.2,
       accentColor: AppColors.info,
+      imageAsset: 'assets/images/events/cok-guzel-hareketler-2.png',
     ),
     Event(
       id: 'dogu-demirkol',
@@ -57,6 +58,7 @@ abstract final class MockFixtures {
       totalSold: 2350,
       occupancyPct: 62.7,
       accentColor: AppColors.info,
+      imageAsset: 'assets/images/events/dogu-demirkol.png',
     ),
     Event(
       id: 'meksika-acmazi',
@@ -66,6 +68,7 @@ abstract final class MockFixtures {
       totalSold: 1124,
       occupancyPct: 55.8,
       accentColor: AppColors.vendorBiletinial,
+      imageAsset: 'assets/images/events/meksika-acmazi.png',
     ),
     Event(
       id: 'okan-cabalar',
@@ -75,6 +78,7 @@ abstract final class MockFixtures {
       totalSold: 986,
       occupancyPct: 48.3,
       accentColor: AppColors.purple,
+      imageAsset: 'assets/images/events/okan-cabalar.png',
     ),
     Event(
       id: 'tahsin-hasoglu',
@@ -84,6 +88,7 @@ abstract final class MockFixtures {
       totalSold: 742,
       occupancyPct: 41.0,
       accentColor: AppColors.warning,
+      imageAsset: 'assets/images/events/tahsin-hasoglu.png',
     ),
     Event(
       id: 'gece-yarisi-kabare',
@@ -93,6 +98,7 @@ abstract final class MockFixtures {
       totalSold: 3410,
       occupancyPct: 89.5,
       accentColor: AppColors.textTertiary,
+      imageAsset: 'assets/images/events/gece-yarisi-kabare.png',
     ),
     Event(
       id: 'dogaclama-gecesi',
@@ -102,6 +108,7 @@ abstract final class MockFixtures {
       totalSold: 640,
       occupancyPct: 94.2,
       accentColor: AppColors.textTertiary,
+      imageAsset: 'assets/images/events/dogaclama-gecesi.png',
     ),
   ];
 
@@ -129,6 +136,69 @@ abstract final class MockFixtures {
         VendorShare(vendor: Vendor.biletinial, sold: 83, pct: 12.9),
         VendorShare(vendor: Vendor.diger, sold: 30, pct: 4.7),
       ],
+    ),
+    _cgh2Show(
+      id: 'cgh2-16may-ankara',
+      dateTime: DateTime(2026, 5, 16, 20, 30),
+      venue: 'Congresium Ankara',
+      city: 'Ankara',
+      capacity: 1000,
+      sold: 720,
+      avgTicketPrice: 950,
+    ),
+    _cgh2Show(
+      id: 'cgh2-17may-izmir',
+      dateTime: DateTime(2026, 5, 17, 20, 30),
+      venue: 'İzmir Arena',
+      city: 'İzmir',
+      capacity: 950,
+      sold: 688,
+      avgTicketPrice: 900,
+    ),
+    _cgh2Show(
+      id: 'cgh2-22may-bursa',
+      dateTime: DateTime(2026, 5, 22, 20, 30),
+      venue: 'Merinos AKKM',
+      city: 'Bursa',
+      capacity: 900,
+      sold: 675,
+      avgTicketPrice: 850,
+    ),
+    _cgh2Show(
+      id: 'cgh2-23may-antalya',
+      dateTime: DateTime(2026, 5, 23, 20, 30),
+      venue: 'Antalya Açıkhava',
+      city: 'Antalya',
+      capacity: 900,
+      sold: 662,
+      avgTicketPrice: 900,
+    ),
+    _cgh2Show(
+      id: 'cgh2-29may-adana',
+      dateTime: DateTime(2026, 5, 29, 20, 30),
+      venue: 'Çukurova Üniversitesi Açıkhava',
+      city: 'Adana',
+      capacity: 850,
+      sold: 650,
+      avgTicketPrice: 825,
+    ),
+    _cgh2Show(
+      id: 'cgh2-30may-eskisehir',
+      dateTime: DateTime(2026, 5, 30, 20, 30),
+      venue: 'Atatürk Kültür Sanat Merkezi',
+      city: 'Eskişehir',
+      capacity: 1010,
+      sold: 640,
+      avgTicketPrice: 800,
+    ),
+    _cgh2Show(
+      id: 'cgh2-31may-konya',
+      dateTime: DateTime(2026, 5, 31, 20, 30),
+      venue: 'Selçuklu Kongre Merkezi',
+      city: 'Konya',
+      capacity: 1000,
+      sold: 634,
+      avgTicketPrice: 850,
     ),
     Show(
       id: 'dogu-15may',
@@ -207,6 +277,53 @@ abstract final class MockFixtures {
       ],
     ),
   ];
+
+  static Show _cgh2Show({
+    required String id,
+    required DateTime dateTime,
+    required String venue,
+    required String city,
+    required int capacity,
+    required int sold,
+    required int avgTicketPrice,
+  }) {
+    final biletix = (sold * 0.48).round();
+    final bubilet = (sold * 0.34).round();
+    final biletinial = (sold * 0.13).round();
+    final diger = sold - biletix - bubilet - biletinial;
+
+    return Show(
+      id: id,
+      eventId: 'cgh2',
+      eventTitle: 'Çok Güzel Hareketler 2',
+      dateTime: dateTime,
+      venue: venue,
+      city: city,
+      capacity: capacity,
+      sold: sold,
+      grossRevenue: sold * avgTicketPrice,
+      avgTicketPrice: avgTicketPrice,
+      status: EventStatus.devamEden,
+      vendorBreakdown: [
+        VendorShare(
+          vendor: Vendor.biletix,
+          sold: biletix,
+          pct: biletix / sold * 100,
+        ),
+        VendorShare(
+          vendor: Vendor.bubilet,
+          sold: bubilet,
+          pct: bubilet / sold * 100,
+        ),
+        VendorShare(
+          vendor: Vendor.biletinial,
+          sold: biletinial,
+          pct: biletinial / sold * 100,
+        ),
+        VendorShare(vendor: Vendor.diger, sold: diger, pct: diger / sold * 100),
+      ],
+    );
+  }
 
   /// 9–15 Mayıs 2026 günlük satış serisi.
   static final List<DailySales> dailySales = [
@@ -374,14 +491,11 @@ abstract final class MockFixtures {
     ),
   ];
 
-  /// Mayıs 2026'da etkinliği olan günler — takvim noktaları.
-  static final Set<DateTime> mayEventDays = {
-    DateTime(2026, 5, 1),
-    DateTime(2026, 5, 6),
-    DateTime(2026, 5, 8),
-    DateTime(2026, 5, 14),
-    DateTime(2026, 5, 15),
-    DateTime(2026, 5, 21),
-    DateTime(2026, 5, 29),
+  /// Mayıs 2026 takvim noktaları gösterilerden türetilir; işaret ile alt liste
+  /// hiçbir zaman birbirinden kopmaz.
+  static Set<DateTime> get mayEventDays => {
+    for (final show in shows)
+      if (show.dateTime.year == 2026 && show.dateTime.month == 5)
+        DateTime(show.dateTime.year, show.dateTime.month, show.dateTime.day),
   };
 }

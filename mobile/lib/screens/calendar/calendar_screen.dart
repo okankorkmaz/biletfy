@@ -113,17 +113,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
             const SizedBox(height: AppSpace.sectionGap),
 
-            Text(
-              Tr.dateWithWeekday(_selectedDay),
-              style: AppTypography.titleM,
-            ),
+            Text(Tr.dateWithWeekday(_selectedDay), style: AppTypography.titleM),
             const SizedBox(height: AppSpace.titleGap),
 
             AsyncSection<List<Show>>(
               future: _dayShows,
               onRetry: _load,
               isEmpty: (shows) => shows.isEmpty,
-              emptyMessage: 'Bu günde gösteri yok',
+              emptyMessage: 'Bu tarihte etkinlik bulunmuyor.',
               skeleton: const AppShimmer(
                 child: Column(
                   children: [
@@ -137,10 +134,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 children: [
                   for (final (index, show) in shows.indexed) ...[
                     if (index > 0) const SizedBox(height: AppSpace.chipGap),
-                    DayEventRow(
-                      show: show,
-                      onTap: () => _openDetail(show),
-                    ),
+                    DayEventRow(show: show, onTap: () => _openDetail(show)),
                   ],
                 ],
               ),
@@ -158,10 +152,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
     if (match.isEmpty) return;
     await Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (_) => EventDetailScreen(
-          event: match.first,
-          initialShowId: show.id,
-        ),
+        builder: (_) =>
+            EventDetailScreen(event: match.first, initialShowId: show.id),
       ),
     );
   }
