@@ -10,8 +10,16 @@ import '../../theme/app_typography.dart';
 import '../../widgets/widgets.dart';
 import 'profile_screen.dart';
 
-/// Uygulama sürümü — tek yerde tutulur (drawer da buradan okur).
-const String kAppVersion = '0.1.0 (1)';
+/// Flutter derlemesindeki `pubspec.yaml` sürümü; drawer da buradan okur.
+const String _appVersionName = String.fromEnvironment(
+  'FLUTTER_BUILD_NAME',
+  defaultValue: '0.1.3',
+);
+const String _appBuildNumber = String.fromEnvironment(
+  'FLUTTER_BUILD_NUMBER',
+  defaultValue: '4',
+);
+const String kAppVersion = '$_appVersionName ($_appBuildNumber)';
 
 /// 07_Ayarlar — kök sekme.
 ///

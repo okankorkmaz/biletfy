@@ -288,6 +288,7 @@ void main() {
       expect(find.text('Bağla'), findsOneWidget);
 
       await scrollToVertical(tester, find.text('Sürüm'));
+      expect(find.text('0.1.3 (4)'), findsOneWidget);
       expect(find.text('Türk lirası (₺)'), findsOneWidget);
       expect(find.text('Pazartesi'), findsOneWidget);
     });
