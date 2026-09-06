@@ -13,6 +13,7 @@ dependencies:
   google_fonts: ^8.2.1
   intl: ^0.20.3
   lucide_icons_flutter: ^3.1.17
+  share_plus: 13.3.0
   shimmer: ^4.0.0
 
 dev_dependencies:

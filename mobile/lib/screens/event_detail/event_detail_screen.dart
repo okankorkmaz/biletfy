@@ -4,6 +4,7 @@ import '../../core/formatters.dart';
 import '../../data/dashboard_repository.dart';
 import '../../data/repository_scope.dart';
 import '../../models/event.dart';
+import '../../services/event_share_service.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_dimens.dart';
 import '../../theme/app_icons.dart';
@@ -101,15 +102,36 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     if (picked != null) setState(() => _selectedShow = picked);
   }
 
+  Future<void> _shareEvent(BuildContext actionContext) async {
+    final box = actionContext.findRenderObject() as RenderBox?;
+    final origin = box == null
+        ? const Rect.fromLTWH(0, 0, 1, 1)
+        : box.localToGlobal(Offset.zero) & box.size;
+    try {
+      await EventShareService.share(
+        event: widget.event,
+        show: _selectedShow,
+        origin: origin,
+      );
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Paylaşım ekranı açılamadı.')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppTopBar.push(
         title: 'Etkinlik Detayı',
-        action: TopBarAction(
-          icon: AppIcons.share,
-          tooltip: 'Paylaş',
-          onTap: () {},
+        action: Builder(
+          builder: (actionContext) => TopBarAction(
+            icon: AppIcons.share,
+            tooltip: 'Paylaş',
+            onTap: () => _shareEvent(actionContext),
+          ),
         ),
       ),
       body: AsyncSection<List<Show>>(

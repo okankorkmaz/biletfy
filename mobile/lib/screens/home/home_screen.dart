@@ -74,6 +74,21 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _selectPeriod(OverviewPeriod period) {
+    setState(() {
+      _period = period;
+      _overview = _repository.overview(period);
+      _breakdown = _repository.vendorBreakdown(range: _periodRange);
+    });
+  }
+
+  void _selectSummaryDays(int days) {
+    setState(() {
+      _summaryDays = days;
+      _summary = _repository.dailySummary(days);
+    });
+  }
+
   Future<void> _refresh() async {
     _load();
     await Future.wait([_overview!, _breakdown!, _summary!])
@@ -104,10 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             _OverviewHeader(
               period: _period,
-              onPeriodChanged: (period) {
-                setState(() => _period = period);
-                _load();
-              },
+              onPeriodChanged: _selectPeriod,
               updatedAt: _overview,
             ),
             const SizedBox(height: AppSpace.titleGap),
@@ -177,12 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: '$_summaryDays Gün',
                 sheetTitle: 'Aralık',
                 options: const ['7 Gün', '30 Gün', '90 Gün'],
-                onSelected: (value) {
-                  setState(
-                    () => _summaryDays = int.parse(value.split(' ').first),
-                  );
-                  _load();
-                },
+                onSelected: (value) =>
+                    _selectSummaryDays(int.parse(value.split(' ').first)),
               ),
               onTap: widget.onOpenDailySales,
               child: AsyncSection<DailySalesSummary>(

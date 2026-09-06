@@ -90,6 +90,25 @@ void main() {
     expect(find.text('%68,4'), findsOneWidget);
   });
 
+  testWidgets('günlük satış özeti aralığı toplamı ve ortalamayı günceller', (
+    tester,
+  ) async {
+    await tester.pumpWidget(app());
+    await tester.pumpAndSettle();
+
+    expect(find.text('+2.846'), findsOneWidget);
+    expect(find.text('+407'), findsOneWidget);
+
+    await tester.tap(find.text('7 Gün'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('30 Gün').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Son 30 Gün'), findsOneWidget);
+    expect(find.text('+2.846'), findsNothing);
+    expect(find.text('+407'), findsNothing);
+  });
+
   testWidgets('donut legend firma paylarını gösterir', (tester) async {
     await tester.pumpWidget(app());
     await tester.pumpAndSettle();

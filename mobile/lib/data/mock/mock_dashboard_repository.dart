@@ -82,8 +82,25 @@ class MockDashboardRepository implements DashboardRepository {
   }
 
   @override
-  Future<DailySalesSummary> dailySummary(int days) =>
-      _respond(MockFixtures.dailySummary);
+  Future<DailySalesSummary> dailySummary(int days) async {
+    final range = SalesRange.values.firstWhere(
+      (range) => range.days == days,
+      orElse: () => throw DashboardException(
+        'Desteklenmeyen satış özeti aralığı: $days gün',
+      ),
+    );
+    final series = await dailySales(range);
+    if (series.isEmpty) {
+      throw const DashboardException('Bu aralıkta satış özeti bulunamadı');
+    }
+    final periodTotal = series.fold(0, (total, point) => total + point.sold);
+    return DailySalesSummary(
+      yesterday: series.length > 1 ? series[series.length - 2].sold : 0,
+      today: series.last.sold,
+      last7Days: periodTotal,
+      dailyAverage: (periodTotal / series.length).round(),
+    );
+  }
 
   @override
   Future<List<Event>> events(EventFilter filter) {
